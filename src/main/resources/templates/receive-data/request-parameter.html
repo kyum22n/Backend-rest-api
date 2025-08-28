@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backend-Rest-API</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  <link href="/css/my.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="card m-2">
+    <div class="card-header">Request Parameter</div>
+    <div class="card-body">
+      <div><a href="/receive-data-rest/request-parameter?mid=red&mname=hongkildong&mpassword=12345">GET 요청 파라미터</a> </div>
+
+      <hr />
+
+      <button onclick="ajax1()" class="btn btn-warning btn-sm">POST 요청 파라미터1</button>
+      <script>
+        async function ajax1() {
+          /*const response = await fetch("/receive-data-rest/request-parameter", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "mid=red2&mname=홍길동&mpassword=12345"
+          });*/
+
+          const response = await fetch("/receive-data-rest/request-parameter1", {
+            method: "POST",
+            body: new URLSearchParams({
+              mid: "red",
+              mname: "홍길동",
+              mpassword: 12345
+            })
+          });
+
+          const json = await response.json();
+          console.log(json);
+        }
+      </script>
+
+      <hr />
+
+      <button onclick="ajax2()" class="btn btn-warning btn-sm">POST 요청 파라미터2</button>
+      <script>
+        async function ajax2() {
+          const response = await fetch("/receive-data-rest/request-parameter2", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "mid=red2&mname=홍길동&mpassword=12345"
+          });
+
+          const json = await response.json();
+          console.log(json);
+        }
+      </script>
+
+      <hr/>
+
+      <button onclick="ajax3()" class="btn btn-info btn-sm">POST JSON으로 보낼경우</button>
+      <script>
+        async function ajax3() {
+          /*//자바스크립트 객체
+          const obj = {mid: "red", mname: "홍길동", mpassword: "12345"};
+          console.log(obj);
+          //자바스크립트 객체 -> JSON
+          const json = JSON.stringify(obj);
+          console.log(json);
+          //자바스크립트 객체 <- JSON
+          const obj2 = JSON.parse(json);
+          console.log(obj2);*/
+
+          const member = {
+            mid: "red",
+            mname: "홍길동",
+            mpassword: "12345"
+          };
+
+          const response = await fetch("/receive-data-rest/json", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(member)
+          });
+
+          const json = await response.json();
+          console.log(json);
+        }
+      </script>
+    </div>
+  </div>
+
+</body>
+
+</html>

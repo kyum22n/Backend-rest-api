@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backend-Rest-API</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="card m-2">
+    <div class="card-header">
+      PUT 방식으로 요청하기
+    </div>
+    <div class="card-body">
+		<button onclick="ajax()" class="btn btn-info btn-sm">/http-rest/put-method 요청</button>
+		<script>
+			async function ajax() {					
+				const response = await fetch("/http-rest/put-method", {
+					method: "PUT"
+				});
+				const json = await response.json();
+				console.log(json);					
+			}
+		</script>
+    </div>
+  </div>
+</body>
+</html>

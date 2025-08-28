@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Backend-Rest-API</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+		crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+
+	<script>
+		async function ajax() {
+			const loginForm = {
+				mid: "admin",
+				mpassword: "kosa12345"
+			};
+
+			const response = await fetch("/servlet-api-rest/login", {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(loginForm)
+			});
+
+			const result = await response.text();
+			console.log(result);
+		}
+	</script>
+</head>
+
+<body>
+	<div class="card m-2">
+		<div class="card-header">
+			HttpSession
+		</div>
+		<div class="card-body">
+			<button onclick="ajax()" class="btn btn-info btn-sm">로그인</button>
+			<a href="/servlet-api-rest/logout" class="btn btn-info btn-sm">로그아웃</a>
+			<a href="/servlet-api-rest/login-check" class="btn btn-info btn-sm">로그인체크</a>
+		</div>
+	</div>
+</body>
+
+</html>

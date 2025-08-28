@@ -1,0 +1,12 @@
+/* CSS 클래스 정의 */
+.mybtn {
+  border-radius: 5px;
+}
+
+.mybtn-info {
+  background-color: aqua;
+}
+
+.mybtn-sm {
+  font-size: 12px;
+}

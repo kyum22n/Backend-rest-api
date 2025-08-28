@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.mybatis.BoardDao">
+  <insert id="insert"
+          parameterType="Board">
+    <selectKey keyProperty="bno" resultType="int" order="BEFORE">
+      select seq_board_bno.nextval from dual
+    </selectKey>
+
+    insert into board (
+      bno, btitle, bcontent, bwriter, bdate, bhitcount,
+      battachoname, battachsname, battachtype, battachdata
+    )
+    values (
+      #{bno}, 
+      #{btitle}, #{bcontent}, #{bwriter}, sysdate, 0,
+      #{battachoname}, #{battachsname}, #{battachtype}, #{battachdata}
+    )
+  </insert>
+
+  <select id="selectByBno"
+          parameterType="int"
+          resultType="Board">
+    select 
+      bno, btitle, bcontent, bwriter, bdate, bhitcount,
+      battachoname, battachsname, battachtype, battachdata
+    from board
+    where bno = #{value}
+  </select>
+
+  <select id="selectByPage"
+          resultType="Board">
+    <![CDATA[ 
+    SELECT rnum, bno, btitle, bwriter, bdate, bhitcount
+    FROM (
+      SELECT rownum as rnum, bno, btitle, bwriter, bdate, bhitcount
+      FROM (
+          select bno, btitle, bwriter, bdate, bhitcount
+          from board
+          ORDER BY bno DESC
+      )
+      WHERE rownum <= 10
+    )
+    WHERE rnum >= 1
+    ]]>
+  </select>
+
+  <update id="update"
+          parameterType="Board">
+    update board
+    set btitle = #{btitle}, 
+        bcontent = #{bcontent},
+        battachoname = #{battachoname},
+        battachsname = #{battachsname},
+        battachtype = #{battachtype},
+        battachdata = #{battachdata}
+    where bno = #{bno}
+  </update>
+
+  <update id="updateHitcount"
+          parameterType="int">
+    update board
+    set bhitcount = bhitcount + 1
+    where bno = #{value}
+  </update>
+
+  <delete id="delete"
+          parameterType="int">
+    delete from board
+    where bno = #{value}      
+  </delete>
+
+  <select id="countAll"
+          resultType="int">
+    select count(*) from board
+  </select>
+</mapper>

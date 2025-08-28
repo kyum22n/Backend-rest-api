@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Backend-Rest-API</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+		crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div class="card m-2">
+		<div class="card-header">
+			Backend-Rest-API
+		</div>
+		<div class="card-body">
+
+			<div class="card">
+				<div class="card-header">HTTP 요청 방식(메소드)</div>
+				<div class="card-body">
+					<ul>
+						<li><a href="/http/getmethod">GET 방식</a></li>
+						<li><a href="/http/postmethod">POST 방식</a></li>
+						<li><a href="/http/putmethod">PUT 방식</a></li>
+						<li><a href="/http/deletemethod">DELETE 방식</a></li>
+						<li><a href="/http/contentnego">응답 내용 협상</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card mt-2">
+				<div class="card-header">요청 데이터 받기</div>
+				<div class="card-body">
+					<ul>
+						<li><a href="/receive-data/path-variable">경로 변수</a></li>
+						<li><a href="/receive-data/request-parameter">요청 파라미터</a></li>
+						<li><a href="/receive-data/request-body">요청 본문(JSON)</a></li>
+						<li><a href="/receive-data/multipart">멀티 파트(첨부 파일)</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card mt-2">
+				<div class="card-header">요청 헤더 받기</div>
+				<div class="card-body">
+					<ul>
+						<li><a href="/receive-data/header">헤더값 얻기</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card mt-2">
+				<div class="card-header">유효성 검사</div>
+				<div class="card-body">
+					<ul>
+						<li><a href="/validation/request-parameter">요청 파라미터값 검사</a></li>
+						<li><a href="/validation/json">요청 바디의 JSON 검사</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card mt-2">
+				<div class="card-header">의존성 주입</div>
+				<div class="card-body">
+					<ul>
+						<li><a href="/di">의존성 주입</a></li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="card mt-2">
+				<div class="card-header">HttpServletRequest/HttpServletResponse/HttpSession</div>
+				<div class="card-body">
+					<ul>
+						<li><a href="/servlet-api/request-response">HttpServletRequest/HttpServletResponse</a></li>
+						<li><a href="/servlet-api/session">HttpSession</a></li>
+					</ul>
+				</div>
+			</div>			
+
+		</div>
+	</div>
+</body>
+
+</html>
