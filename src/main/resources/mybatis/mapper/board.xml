@@ -33,6 +33,7 @@
   </select>
 
   <select id="selectByPage"
+          parameterType="Pager"
           resultType="Board">
     <![CDATA[ 
     SELECT rnum, bno, btitle, bwriter, bdate, bhitcount

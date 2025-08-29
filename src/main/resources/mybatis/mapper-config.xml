@@ -13,6 +13,6 @@
   <typeAliases>
     <typeAlias type="com.example.demo.dto.Member" alias="Member"/>
     <typeAlias type="com.example.demo.dto.Board" alias="Board"/>
+    <typeAlias type="com.example.demo.dto.Pager" alias="Pager"/>
   </typeAliases>
 </configuration>
-

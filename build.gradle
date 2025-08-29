@@ -43,6 +43,9 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+
+	// JSON
+	implementation 'org.json:json:20250517'
 }
 
 tasks.named('test') {

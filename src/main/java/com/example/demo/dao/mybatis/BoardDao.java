@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.Board;
+import com.example.demo.dto.Pager;
 
 /*
 create table board (
@@ -27,7 +28,7 @@ create sequence seq_board_bno;
 public interface BoardDao {
     public int insert(Board board);
     public Board selectByBno(int bno);
-    public List<Board> selectByPage();
+    public List<Board> selectByPage(Pager pager);
     public int update(Board board);
     public int updateHitcount(int bno);
     public int delete(int bno);
