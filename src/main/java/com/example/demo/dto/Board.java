@@ -30,7 +30,6 @@ public class Board {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String battachsname;
 	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String battachtype;
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -25,4 +25,25 @@ public class BoardService {
   public void create(Board board) {
     boardDao.insert(board);
   }
+
+  public int getTotalRows() {
+    int totalRows = boardDao.countAll();
+    return totalRows;
+  }
+
+  public Board getBoard(int bno) {
+    Board board = boardDao.selectByBno(bno);
+    return board;
+  }
+
+  public int modify(Board board) {
+    int rows = boardDao.update(board);
+    return rows;
+  }
+
+  public int remove(int bno) {
+    int rows = boardDao.delete(bno);
+    return rows;
+  }
+
 }

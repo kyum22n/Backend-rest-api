@@ -44,9 +44,9 @@
           from board
           ORDER BY bno DESC
       )
-      WHERE rownum <= 10
+      WHERE rownum <= #{endRowNo}
     )
-    WHERE rnum >= 1
+    WHERE rnum >= #{startRowNo}
     ]]>
   </select>
 
@@ -54,11 +54,13 @@
           parameterType="Board">
     update board
     set btitle = #{btitle}, 
-        bcontent = #{bcontent},
-        battachoname = #{battachoname},
-        battachsname = #{battachsname},
-        battachtype = #{battachtype},
-        battachdata = #{battachdata}
+        bcontent = #{bcontent}
+        <if test="battachoname != null">
+          , battachoname = #{battachoname}
+          , battachsname = #{battachsname}
+          , battachtype = #{battachtype}
+          , battachdata = #{battachdata}
+        </if>
     where bno = #{bno}
   </update>
 
