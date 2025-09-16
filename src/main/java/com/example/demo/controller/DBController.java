@@ -1,10 +1,29 @@
 package com.example.demo.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.dao.mybatis.MemberDao;
 import com.example.demo.dto.Board;
 import com.example.demo.dto.LoginForm;
 import com.example.demo.dto.Member;
@@ -17,30 +36,6 @@ import com.example.demo.service.MemberService.RemoveResult;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -187,7 +182,7 @@ public class DBController {
     log.info("pageNo: " + pageNo);
 
     int totalRows = boardService.getTotalRows();
-    Pager pager = new Pager(10, 10, totalRows, pageNo);
+    Pager pager = new Pager(5, 5, totalRows, pageNo);
 
     List<Board> list = boardService.getListByPage(pager);
 
@@ -219,7 +214,13 @@ public class DBController {
   
   @Login
   @GetMapping("/board-detail")
-  public Board boardDetail(@RequestParam("bno") int bno) {
+  public Board boardDetail(@RequestParam("bno") int bno, @RequestParam(value = "bhitcount", defaultValue = "false") boolean bhitcount) {
+    log.info("~~~");
+    
+    if(bhitcount) {
+      log.info("~~~");
+      boardService.addBhitcount(bno);
+    }
     Board board = boardService.getBoard(bno);
     return board;
   }
@@ -239,6 +240,11 @@ public class DBController {
     //본문의 내용을 파일로 저장할 수 있도록 헤더 추가
     String encodedFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
     response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
+
+    // 이미지 캐싱을 하지 않도록 헤더 추가
+    response.setHeader(HttpHeaders.CACHE_CONTROL, "no-store, no-cache, must-revalidate, proxy-revalidate");
+    response.setHeader(HttpHeaders.PRAGMA, "no-cache");
+    response.setHeader(HttpHeaders.EXPIRES, "0");
     
     //응답 본문으로 데이터를 출력하는 스트림
     OutputStream os = response.getOutputStream();

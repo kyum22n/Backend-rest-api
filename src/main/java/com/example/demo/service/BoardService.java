@@ -46,4 +46,9 @@ public class BoardService {
     return rows;
   }
 
+  public void addBhitcount(int bno) {
+    int rows = boardDao.updateHitcount(bno);
+    log.info("업데이트된 행 수: {}", rows);
+  }
+
 }

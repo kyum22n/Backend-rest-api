@@ -20,32 +20,54 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
   // 전처리
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    // log.info("전처리 실행");
+    log.info("전처리 실행");
+
+    // preflight request로 요청한 것은 통과
+    if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+      return true;
+    }
 
     // 1) 요청 매핑 메소드에 @Login이 붙어 있는지 확인
     HandlerMethod handlerMethod = (HandlerMethod) handler;
     Login login = handlerMethod.getMethodAnnotation(Login.class);
+
     if (login != null) {
       // @Login 붙어 있을 경우
       // 2) JWT가 있는지 확인
+      String jwt = null;
+
+      // 2-1) 요청 헤더에 실려왔는지 확인
       String authorization = request.getHeader("Authorization");
-      if (authorization == null || authorization.equals("")) {
+      if(authorization != null) {
+        // Authorization: Bearer xxxxxx
+        if(!authorization.substring(7).equals("")) {
+          jwt = authorization.substring(7);
+        }
+      } 
+
+      // 2-2) 쿼리 스트링 형태로 실려왔는지 확인
+      String jwtParam = request.getParameter("jwt");
+      if(jwtParam != null) {
+        jwt = jwtParam;
+      }
+
+      if(jwt == null) {
         response.sendError(HttpServletResponse.SC_FORBIDDEN, "JWT가 없습니다.");
         return false;
       } else {
-        String jwt = authorization.substring(7);
         if (jwtService.validateJwt(jwt)) { // 유효할 경우
           return true;
         } else { // 유효하지 않을 경우
           response.sendError(HttpServletResponse.SC_FORBIDDEN, "JWT가 유효하지 않습니다.");
           return false;
-        }
-      }
+        }  
+      }  
+      
     } else {
       // @Login이 붙어 있지 않을 경우
       return true;
     }
-
+    
   }
 
   // 후처리
